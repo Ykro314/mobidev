@@ -19,9 +19,8 @@ header {
     height: 150px;
     padding: 10px;
     box-sizing: border-box;
-//    margin-right: 9px;
     margin-bottom: 9px;
-    transition: all 0.4s;
+    transition: transform 0.4s, background 0.3s;
     cursor: pointer;
     &--wide {
       width: 310px;
@@ -37,11 +36,14 @@ header {
       transform: translate(-50%, -50%);
       width: 60px; /*default*/
       height: 60px; /*default*/
-      background-image: url("/graph/sprites/spritesheet-menu-icons.png");
+      background-image: url("../graph/sprites/spritesheet-menu-icons.png");
       background-repeat: no-repeat;
     }
     &--home {
-      background: @btn-bg-home;
+      background-color: @btn-bg-home;
+      &:hover {
+        background-color: darken((@btn-bg-home),15%);
+      }
       &:before {
         width: 52px;
         height: 54px;
@@ -49,7 +51,10 @@ header {
       }
     }
     &--about {
-      background: @btn-bg-about;
+      background-color: @btn-bg-about;
+      &:hover {
+        background-color: darken((@btn-bg-about),15%);
+      }
       &:before {
         width: 50px;
         height: 63px;
@@ -57,7 +62,10 @@ header {
       }
     }
     &--photo {
-      background: @btn-bg-photos;
+      background-color: @btn-bg-photos;
+      &:hover {
+        background-color: darken((@btn-bg-photos),15%);
+      }
       &:before {
         width: 58px;
         height: 54px;
@@ -65,7 +73,10 @@ header {
       }
     }
     &--testimonals {
-      background: @btn-bg-testimonals;
+      background-color: @btn-bg-testimonals;
+      &:hover {
+        background-color: darken((@btn-bg-testimonals),15%);
+      }
       &:before {
         width: 55px;
         height: 47px;
@@ -73,7 +84,10 @@ header {
       }
     }
     &--contact {
-      background: @btn-bg-contact;
+      background-color: @btn-bg-contact;
+      &:hover {
+        background-color: darken((@btn-bg-contact),15%);
+      }
       &:before {
         width: 68px;
         height: 39px;
@@ -82,7 +96,10 @@ header {
     }
     &--portfolio {
       width: 280px;
-      background: @btn-bg-portfolio;
+      background-color: @btn-bg-portfolio;
+      &:hover {
+        background-color: darken((@btn-bg-portfolio),15%);
+      }
       &:before {
         width: 57px;
         height: 53px;
@@ -90,7 +107,10 @@ header {
       }
     }
     &--hire {
-      background: @btn-bg-hire;
+      background-color: @btn-bg-hire;
+      &:hover {
+        background-color: darken((@btn-bg-hire),15%);
+      }
       &:before {
         width: 54px;
         height: 67px;
@@ -118,6 +138,9 @@ header {
   display: flex;
   line-height: 30px;
   padding: 0;
+  &:hover {
+    background-color: darken((@btn-bg-blog),10%);
+  }
   &__image {
     margin-right: 15px;
   }
@@ -138,113 +161,6 @@ header {
   }
 }
 
-//
-//.buttons {
-//  display: flex; 
-//  flex-wrap: wrap;
-//  border: 1px solid red;
-//  li:active {
-//    transform: scale(0.87);
-//  }
-//  &__small {
-//    width: 150px;
-//    height: 150px;
-//    box-sizing: border-box;
-//    padding: 120px 0 10px 10px;
-//    margin-bottom: 9px;
-//    margin-right: 9px;
-//    font-size: 18px;
-//    line-height: 26px;
-//    cursor: pointer;
-//    transition: all 0.4s;
-//  }
-//  &__small--home {
-//    background: url("/graph/img/main-icon-home.png") no-repeat 50% 40% @btn-bg-home;
-//    &:hover {
-//      background-color: darken((@btn-bg-home),15%);
-//    }
-//  }
-//  &__small--about {
-//    background: url("/graph/img/main-icon-about.png") no-repeat 50% 40% @btn-bg-about;
-//     &:hover {
-//      background-color: darken((@btn-bg-about),15%);
-//    }
-//  }
-//  &__small--photos {
-//    background: url("/graph/img/main-icon-photos.png") no-repeat 50% 40% @btn-bg-photos;
-//    &:hover {
-//      background-color: darken((@btn-bg-photos),15%);
-//    }
-//  }
-//  &__small--testimonals {
-//    background: url("/graph/img/main-icon-testimonals.png") no-repeat 50% 40% @btn-bg-testimonals;
-//    margin-right: 0;
-//    &:hover {
-//      background-color: darken((@btn-bg-testimonals),15%);
-//    }
-//  }
-//  &__small--contact {
-//    background: url("/graph/img/main-icon-contact.png") no-repeat 50% 40% @btn-bg-contact;
-//    margin-right: 0;
-//     &:hover {
-//      background-color: darken((@btn-bg-contact),15%);
-//     }
-//  }
-//  &__large {
-//    width: 310px;
-//    height: 150px;
-//    box-sizing: border-box;
-//    padding: 120px 0 10px 10px;
-//    margin-bottom: 9px;
-//    margin-right: 9px;
-//    cursor: pointer; 
-//    transition: all 0.4s;
-//  }
-//  &__large--portfolio{
-//    width: 280px;
-//    background:url("/graph/img/main-icon-portfolio.png") no-repeat 50% 40% @btn-bg-portfolio;
-//    &:hover {
-//      background-color: darken((@btn-bg-portfolio),15%);
-//    }
-//  }
-//  &__large--hire {
-//    background:url("/graph/img/main-icon-hire.png") no-repeat 50% 40% @btn-bg-hire;
-//    &:hover {
-//      background-color: darken((@btn-bg-hire),15%);
-//    }
-//  }
-//  &__blog {
-//    display: flex;
-//    width: 438px;
-//    box-sizing: border-box;
-//    margin-right: 9px;
-//    margin-bottom: 9px;
-//    background: @btn-bg-blog;
-//    line-height: 30px;
-//    cursor: pointer;
-//    transition: all 0.4s;
-//    &:hover {
-//      background-color: darken((@btn-bg-blog),10%);
-//    }
-//    .blog-content {
-//      padding: 10px 0 5px 25px;
-//      transition: all 0.4s;
-//    }
-//    h2 {
-//      font-size: 18px;
-//      font-weight: 100;
-//      color: #cccccc;
-//    }
-//    p {
-//      font-size: 22px;
-//    }
-//    time {
-//      font-size: 12px;
-//      color: #999999;
-//    }
-//  }
-//}
-
 .social {
   margin-bottom: 100px;
   &__btn {
@@ -253,6 +169,8 @@ header {
     height: 76px;
     margin-right: 5px;
     transition: all 0.4s;
+    background-image: url("../graph/sprites/spritesheet-social-icons.png");
+    background-repeat: no-repeat;
     &:hover {
       -webkit-filter: brightness(0.8);
     }
@@ -261,13 +179,13 @@ header {
     }
   }
   &__btn--fb {
-    background: url("/graph/img/footer-btn-fb.png");
+    background-position: -15px -15px;
   }
   &__btn--tw {
-    background: url("/graph/img/footer-btn-tw.png");
+    background-position: -225px -15px;
   }
   &__btn--gplus {
-    background: url("/graph/img/footer-btn-gplus.png");
+    background-position: -120px -15px;
   }
   &__copyright {
     float: right;
