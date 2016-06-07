@@ -288,107 +288,132 @@ header .page-title {
   line-height: 65px;
   font-weight: 100;
 }
-.buttons {
+.menu {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
-.buttons div:active {
-  transform: scale(0.87);
-}
-.buttons__small {
+.menu__item {
+  position: relative;
+  display: flex;
   width: 150px;
   height: 150px;
+  padding: 10px;
   box-sizing: border-box;
-  padding: 120px 0 10px 10px;
   margin-bottom: 9px;
-  margin-right: 9px;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.menu__item--wide {
+  width: 310px;
+}
+.menu__item:active {
+  transform: scale(0.87);
+}
+.menu__item:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  /*default*/
+  height: 60px;
+  /*default*/
+  background-image: url("/graph/sprites/spritesheet-menu-icons.png");
+  background-repeat: no-repeat;
+}
+.menu__item--home {
+  background: #3387ea;
+}
+.menu__item--home:before {
+  width: 52px;
+  height: 54px;
+  background-position: -277px -15px;
+}
+.menu__item--about {
+  background: #f9be3e;
+}
+.menu__item--about:before {
+  width: 50px;
+  height: 63px;
+  background-position: -15px -15px;
+}
+.menu__item--photo {
+  background: #59b0e2;
+}
+.menu__item--photo:before {
+  width: 58px;
+  height: 54px;
+  background-position: -359px -15px;
+}
+.menu__item--testimonals {
+  background: #33af95;
+}
+.menu__item--testimonals:before {
+  width: 55px;
+  height: 47px;
+  background-position: -534px -15px;
+}
+.menu__item--contact {
+  background: #7e5b8c;
+}
+.menu__item--contact:before {
+  width: 68px;
+  height: 39px;
+  background-position: -95px -15px;
+}
+.menu__item--portfolio {
+  width: 280px;
+  background: #d3573e;
+}
+.menu__item--portfolio:before {
+  width: 57px;
+  height: 53px;
+  background-position: -447px -15px;
+}
+.menu__item--hire {
+  background: #86a73f;
+}
+.menu__item--hire:before {
+  width: 54px;
+  height: 67px;
+  background-position: -193px -15px;
+}
+.menu__item--blog {
+  width: 440px;
+  background: #151a26;
+}
+.menu__item--blog:before {
+  display: none;
+}
+.menu__anchor {
+  align-self: flex-end;
   font-size: 18px;
   line-height: 26px;
-  cursor: pointer;
-  transition: all 0.4s;
+  color: white;
+  text-decoration: none;
 }
-.buttons__small--home {
-  background: url("/graph/img/main-icon-home.png") no-repeat 50% 40% #3387ea;
-}
-.buttons__small--home:hover {
-  background-color: #1361bd;
-}
-.buttons__small--about {
-  background: url("/graph/img/main-icon-about.png") no-repeat 50% 40% #f9be3e;
-}
-.buttons__small--about:hover {
-  background-color: #e39e07;
-}
-.buttons__small--photos {
-  background: url("/graph/img/main-icon-photos.png") no-repeat 50% 40% #59b0e2;
-}
-.buttons__small--photos:hover {
-  background-color: #238ecb;
-}
-.buttons__small--testimonals {
-  background: url("/graph/img/main-icon-testimonals.png") no-repeat 50% 40% #33af95;
-  margin-right: 0;
-}
-.buttons__small--testimonals:hover {
-  background-color: #227463;
-}
-.buttons__small--contact {
-  background: url("/graph/img/main-icon-contact.png") no-repeat 50% 40% #7e5b8c;
-  margin-right: 0;
-}
-.buttons__small--contact:hover {
-  background-color: #543d5e;
-}
-.buttons__large {
-  width: 310px;
-  height: 150px;
-  box-sizing: border-box;
-  padding: 120px 0 10px 10px;
-  margin-bottom: 9px;
-  margin-right: 9px;
-  cursor: pointer;
-  transition: all 0.4s;
-}
-.buttons__large--portfolio {
-  width: 280px;
-  background: url("/graph/img/main-icon-portfolio.png") no-repeat 50% 40% #d3573e;
-}
-.buttons__large--portfolio:hover {
-  background-color: #a03924;
-}
-.buttons__large--hire {
-  background: url("/graph/img/main-icon-hire.png") no-repeat 50% 40% #86a73f;
-}
-.buttons__large--hire:hover {
-  background-color: #596f2a;
-}
-.buttons__blog {
+.blog {
   display: flex;
-  width: 438px;
-  box-sizing: border-box;
-  margin-right: 9px;
-  margin-bottom: 9px;
-  background: #151a26;
   line-height: 30px;
-  cursor: pointer;
-  transition: all 0.4s;
+  padding: 0;
 }
-.buttons__blog:hover {
-  background-color: #030405;
+.blog__image {
+  margin-right: 15px;
 }
-.buttons__blog .blog-content {
-  padding: 10px 0 5px 25px;
-  transition: all 0.4s;
+.blog__content {
+  padding: 10px;
 }
-.buttons__blog h2 {
+.blog__content h3 {
   font-size: 18px;
   font-weight: 100;
   color: #cccccc;
 }
-.buttons__blog p {
+.blog__news-title {
   font-size: 22px;
 }
-.buttons__blog time {
+.blog__news-date {
   font-size: 12px;
   color: #999999;
 }
