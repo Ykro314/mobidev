@@ -1,4 +1,4 @@
-{
+var data = {
   "news": [
     {
       "header": "Microsoft is starting a private beta for its iPhone keyboard",

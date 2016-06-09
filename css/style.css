@@ -424,7 +424,9 @@ header .page-title {
   background-color: #030405;
 }
 .blog__image {
+  display: inline-block;
   margin-right: 15px;
+  flex-shrink: 0;
 }
 .blog__content {
   padding: 10px;
