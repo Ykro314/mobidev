@@ -428,13 +428,28 @@ header .page-title {
   margin-right: 15px;
   flex-shrink: 0;
 }
+.blog__wrapper {
+  position: relative;
+  overflow: hidden;
+}
 .blog__content {
   padding: 10px;
+  transition: all 0.5s;
 }
 .blog__content h3 {
   font-size: 18px;
   font-weight: 100;
   color: #cccccc;
+}
+.blog__content--bottom {
+  background: #151a26;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(100%);
+}
+.blog__content--top {
+  transform: translateY(0);
 }
 .blog__news-title {
   font-size: 22px;
@@ -442,6 +457,9 @@ header .page-title {
 .blog__news-date {
   font-size: 12px;
   color: #999999;
+}
+.top {
+  transform: translateY(-100%);
 }
 .social {
   margin-bottom: 100px;

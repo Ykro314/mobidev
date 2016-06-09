@@ -146,12 +146,30 @@ header {
     margin-right: 15px;
     flex-shrink: 0;
   }
+  &__wrapper {
+    position: relative;
+    overflow: hidden;
+  }
   &__content {
+//    position: absolute;
+//    top: 0;
+//    left: 0;
     padding: 10px;
+    transition: all 0.5s;
     h3 {
       font-size: 18px;
       font-weight: 100;
       color: #cccccc;
+    }
+    &--bottom {
+      background: @btn-bg-blog;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateY(100%);
+    }
+    &--top {
+      transform: translateY(0);
     }
   }
   &__news-title {
@@ -161,6 +179,9 @@ header {
     font-size: 12px;
     color: #999999;
   }
+}
+.top {
+  transform: translateY(-100%);
 }
 
 .social {

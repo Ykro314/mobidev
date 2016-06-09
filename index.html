@@ -42,10 +42,12 @@
         </li>
         <li class="menu__item  menu__item--blog  blog">
           <img class="blog__image" src="./graph/pict/main-blog-image.jpg" alt="blog logo">
-          <div class="blog-content  blog__content">
-            <h3>Blog</h3>
-            <p class="blog__news-title">20+ Best examples of coming soon page desighn</p>
-            <time class="blog__news-date">May 28, 2013</time>
+          <div class="blog__wrapper">
+            <div class="blog__content">
+              <h3>Blog</h3>
+              <p class="blog__news-title">20+ Best examples of coming soon page desighn</p>
+              <time class="blog__news-date">May 28, 2013</time>
+            </div>
           </div>
         </li>
         <li class="menu__item  menu__item--contact">
@@ -62,6 +64,15 @@
       <a href="https://plus.google.com/" class="social__btn  social__btn--gplus" target="_blank"></a>
       <p class="social__copyright">© Copyright 2013 The Design Work.</p>
     </footer>
+  
+  <template>
+    <div class="blog__content  blog__content--bottom">
+      <h3>Blog</h3>
+      <p class="blog__news-title">20+ Best examples of coming soon page desighn</p>
+      <time class="blog__news-date">May 28, 2013</time>
+    </div>
+  </template>
+  
   
   <script src="js/news.json"></script>
   <script src="js/scripts.js"></script>  

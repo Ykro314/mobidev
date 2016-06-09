@@ -48,9 +48,9 @@ function createArrays( list ) {
   return array;
 }
 
-function randomInteger(min, max) {
-  var rand = min - 0.5 + Math.random() * (max - min + 1)
-  rand = Math.round(rand);
+function randomInteger( min, max ) {
+  var rand = min - 0.5 + Math.random() * ( max - min + 1 )
+  rand = Math.round( rand );
   return rand;
 }
 
@@ -75,38 +75,18 @@ function getRandomRecordFromArray( array ) {
 //console.log( helpArray );
 
 function showNews( array ) {
-  var header = document.querySelector( ".blog__news-title" );
-  var date = document.querySelector( ".blog__news-date" );
+  var header = document.querySelector( ".blog .blog__news-title" );
+  var date = document.querySelector( ".blog .blog__news-date" );
+  var wrapper = document.querySelector( ".blog__wrapper" );
   for( var i = 0; i < array.length; i++ ) {
     
     (function(){
     var j = i;
     setTimeout( function timer() {
       
-      function formatDate( date ) {
-        date = new Date( Date.parse( array[j].date ) );
-        function getMonthName( monthNumber, enumMonthObj ) {
-          for( key in enumMonthObj ) {
-            if( key == monthNumber ) {
-              return enumMonthObj[key];
-            }
-          }
-        }
-        var properDate = getMonthName( date.getMonth(), month ) + " " +  date.getDate() + ", " + date.getFullYear();
-        return properDate;
-      }
-      function formatText( text, maxSymbols ) {
-        if( text.length > maxSymbols ) {
-          var formatedText = text.slice( 0, maxSymbols ) + "...";
-          return formatedText;
-        }
-        else {
-          return text;
-        }
-      }
+      addNews( header, date, array, j );
+//      wrapper.removeChild( wrapper.firstElementChild );
       
-      header.textContent = formatText( array[j].header, 45 );
-      date.textContent = formatDate( array[j].date );
       if( j == array.length - 1 ) {
         createAndDispatchCustomEvent( "newsend" );
       }
@@ -115,6 +95,81 @@ function showNews( array ) {
     
   }
 } 
+
+function addAnimatedNews( headerEl, dateEl, array, j ) {
+  function formatDate( date ) {
+    date = new Date( Date.parse( array[j].date ) );
+    function getMonthName( monthNumber, enumMonthObj ) {
+      for( key in enumMonthObj ) {
+        if( key == monthNumber ) {
+          return enumMonthObj[key];
+        }
+      }
+    }
+    var properDate = getMonthName( date.getMonth(), month ) + " " +  date.getDate() + ", " + date.getFullYear();
+    return properDate;
+  }
+  function formatText( text, maxSymbols ) {
+    if( text.length > maxSymbols ) {
+      var formatedText = text.slice( 0, maxSymbols ) + "...";
+      return formatedText;
+    }
+    else {
+      return text;
+    }
+  }
+
+  headerEl.textContent = formatText( array[j].header, 40 );
+  dateEl.textContent = formatDate( array[j].date );
+}
+
+
+function addNews( headerEl, dateEl, array, j ) {
+  function formatDate( date ) {
+    date = new Date( Date.parse( array[j].date ) );
+    function getMonthName( monthNumber, enumMonthObj ) {
+      for( key in enumMonthObj ) {
+        if( key == monthNumber ) {
+          return enumMonthObj[key];
+        }
+      }
+    }
+    var properDate = getMonthName( date.getMonth(), month ) + " " +  date.getDate() + ", " + date.getFullYear();
+    return properDate;
+  }
+  function formatText( text, maxSymbols ) {
+    if( text.length > maxSymbols ) {
+      var formatedText = text.slice( 0, maxSymbols ) + "...";
+      return formatedText;
+    }
+    else {
+      return text;
+    }
+  }
+  function prepareTemplate( headerContent, dateContent ) {
+    var templateEl = document.querySelector( "template" );
+    var template = templateEl.content.children[0].cloneNode( true );
+    
+    var header = template.querySelector( ".blog__news-title" );
+    var date = template.querySelector( ".blog__news-date" );
+    
+    header.textContent = headerContent;
+    date.textContent = dateContent;
+    return template;
+  }
+
+  var templ = prepareTemplate( formatText( array[j].header, 45 ), formatDate( array[j].date ) );
+  var blogWrapper = document.querySelector( ".blog__wrapper" );
+  blogWrapper.appendChild( templ );
+//  blogWrapper.firstElementChild.classList.add( "top" );
+  setTimeout( function() {
+    templ.classList.add( "blog__content--top" );
+  }, 10);
+//  blogWrapper.firstElementChild.addEventListener( "transitionend", function( event ) {
+//    console.log( "transition end" ); 
+//    blogWrapper.removeChild( this );
+//  });
+}
 
 function createAndDispatchCustomEvent( eventType ) {
   var evt = new CustomEvent( eventType );
@@ -131,11 +186,25 @@ function init( array ) {
   showNews( helpArray );
 }
 
+
+
 window.addEventListener( "newsend", function( event ) {
   init( newsArray );
 })
 
+
+
 init( newsArray );
+
+
+
+
+
+
+
+
+
+
 
 //var testRandomArray = groupedArray[3];
 //newsArray.forEach( function( el, i, arr ) {
