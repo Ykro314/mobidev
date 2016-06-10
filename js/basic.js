@@ -3,6 +3,7 @@
 var newsArray = data.news;
 var sortedArray = [];
 var randomizedNewsArray = [];
+var showTimeout = 15000;
 
 
 
@@ -47,7 +48,7 @@ function initNewsFeed( array, firstInit ) {
   tempArray.forEach( function( el, i, arr) {
     getRandomRecordFromArray( el );
   });
-  showNewsFeed( randomizedNewsArray, 15000 );
+  showNewsFeed( randomizedNewsArray, showTimeout );
 }
 
 
@@ -71,7 +72,7 @@ function createNewsObjects( array ) {
 */
 function sortElementsInArray( array ) {
   array.sort( function( a, b ) {
-    return a.getMonthNumber() - b.getMonthNumber();
+    return a.data.getMonthNumber() - b.data.getMonthNumber();
   });
   return array;
 }
@@ -85,7 +86,7 @@ function createSecondLevelArrays( list ) {
   var array = [];
   var index = null;
   list.forEach( function( el, i, arr ){
-    var x = el.getMonthNumber();
+    var x = el.data.getMonthNumber();
     if( index !== x ) {
       array.push( [] );
     }
@@ -97,7 +98,7 @@ function createSecondLevelArrays( list ) {
 
 
 /**
-* Get random element within second level array and push into other array.
+* Get random element within second level array and push into another array. Then delete element. Recursive.
 * @param {array} array
 */
 function getRandomRecordFromArray( array ) {
@@ -131,6 +132,8 @@ function showNewsFeed( array, timeout ) {
     var evt = new CustomEvent( eventType );
     window.dispatchEvent( evt );
   }
+  
+  timeout = timeout || 5000;
   
   for( var i = 0; i < array.length; i++ ) {
     (function(){

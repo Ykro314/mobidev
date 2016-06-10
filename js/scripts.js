@@ -21,9 +21,9 @@ var randomizedNewsArray = [];
 //window.addEventListener( "DOMContentLoaded", function( event ) {
 //  init( newsArray );
 //})
-//window.addEventListener( "newsFeedEnd", function( event ) {
-//  init( newsArray );
-//})
+window.addEventListener( "newsFeedEnd", function( event ) {
+  init( newsArray );
+})
 
 
 
