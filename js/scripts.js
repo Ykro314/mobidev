@@ -18,12 +18,12 @@ var randomizedNewsArray = [];
 
 
 
-window.addEventListener( "DOMContentLoaded", function( event ) {
-  init( newsArray );
-})
-window.addEventListener( "newsFeedEnd", function( event ) {
-  init( newsArray );
-})
+//window.addEventListener( "DOMContentLoaded", function( event ) {
+//  init( newsArray );
+//})
+//window.addEventListener( "newsFeedEnd", function( event ) {
+//  init( newsArray );
+//})
 
 
 
@@ -33,7 +33,7 @@ function init( array ) {
   sortedArray.forEach( function( el, i, arr) {
     getRandomRecordFromArray( el );
   });
-  showNewsFeed( randomizedNewsArray, 1000 );
+  showNewsFeed( randomizedNewsArray, 15000 );
 }
 
 
@@ -63,6 +63,7 @@ function createSecondLevelArrays( list ) {
 
 
 function getRandomRecordFromArray( array ) {
+  
   function randomInteger( min, max ) {
     var rand = min - 0.5 + Math.random() * ( max - min + 1 )
     rand = Math.round( rand );
@@ -82,6 +83,7 @@ function getRandomRecordFromArray( array ) {
 
 
 function showNewsFeed( array, timeout ) {
+  
   function createAndDispatchCustomEvent( eventType ) {
     var evt = new CustomEvent( eventType );
     window.dispatchEvent( evt );
@@ -154,12 +156,13 @@ function addNews( headerEl, dateEl, wrapperEl, array, j ) {
   }
   
   function removePreviousTemplate( wrapperEl, templateEl ) {
-    templateEl.previousElementSibling.addEventListener( "transitionend", transitionEndHandler );
     
     function transitionEndHandler( event ) {
       this.removeEventListener( event.type, transitionEndHandler );
       wrapperEl.removeChild( this );
     }
+    
+    templateEl.previousElementSibling.addEventListener( "transitionend", transitionEndHandler );
   }
   
   var templ = prepareTemplate( array[j].header, formatDate( array[j].date ) );
