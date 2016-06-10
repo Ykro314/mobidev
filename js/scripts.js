@@ -104,7 +104,7 @@ function showNews( array ) {
         createAndDispatchCustomEvent( "newsend" );
       }
       
-    }, 2000 * j );
+    }, 1000 * j );
     })();
     
   }
@@ -142,11 +142,12 @@ function addNews( headerEl, dateEl, wrapperEl, array, j ) {
   
     setTimeout( function() {
       templateEl.classList.add( "blog__content--top" );
-    }, 20);
+    }, 10);
   }
   
-  function removePreviousElement( wrapperEl ) {
-    wrapperEl.firstElementChild.addEventListener( "transitionend", transitionEndHandler );
+  function removePreviousElement( wrapperEl, templateEl ) {
+    templateEl.previousElementSibling.addEventListener( "transitionend", transitionEndHandler );
+    
     function transitionEndHandler( event ) {
       this.removeEventListener( event.type, transitionEndHandler );
       wrapperEl.removeChild( this );
@@ -156,7 +157,7 @@ function addNews( headerEl, dateEl, wrapperEl, array, j ) {
   
   var templ = prepareTemplate( array[j].header, formatDate( array[j].date ) );
   addElement( templ );
-  removePreviousElement( wrapperEl );
+  removePreviousElement( wrapperEl, templ );
   
 }
 
