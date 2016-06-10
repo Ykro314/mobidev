@@ -486,7 +486,7 @@ header .page-title {
   font-size: 12px;
   color: #999999;
 }
-.top {
+.translate-to-top {
   transform: translateY(-100%);
 }
 .social {

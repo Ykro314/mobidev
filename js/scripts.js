@@ -14,14 +14,14 @@ var month = {
 }
 
 var newsArray = data.news;
-var helpArray = [];
+var randomizedNewsArray = [];
 
 
 
 window.addEventListener( "DOMContentLoaded", function( event ) {
   init( newsArray );
 })
-window.addEventListener( "newsend", function( event ) {
+window.addEventListener( "newsFeedEnd", function( event ) {
   init( newsArray );
 })
 
@@ -33,7 +33,7 @@ function init( array ) {
   sortedArray.forEach( function( el, i, arr) {
     getRandomRecordFromArray( el );
   });
-  showNews( helpArray );
+  showNewsFeed( randomizedNewsArray, 1000 );
 }
 
 
@@ -71,7 +71,7 @@ function getRandomRecordFromArray( array ) {
   
   if( array.length > 0 ) {
     var index = randomInteger( 0, array.length - 1 );
-    helpArray.push( array[index] );
+    randomizedNewsArray.push( array[index] );
     array.splice( index, 1 );
     getRandomRecordFromArray( array );
   }
@@ -81,14 +81,16 @@ function getRandomRecordFromArray( array ) {
 }
 
 
-function showNews( array ) {
+function showNewsFeed( array, timeout ) {
   function createAndDispatchCustomEvent( eventType ) {
     var evt = new CustomEvent( eventType );
     window.dispatchEvent( evt );
   }
+  
   var header = document.querySelector( ".blog .blog__news-title" );
   var date = document.querySelector( ".blog .blog__news-date" );
   var wrapper = document.querySelector( ".blog__wrapper" );
+  
   for( var i = 0; i < array.length; i++ ) {
     
     (function(){
@@ -101,10 +103,10 @@ function showNews( array ) {
       * restart algorithm if showed element is the last
       */
       if( j == array.length - 1 ) {
-        createAndDispatchCustomEvent( "newsend" );
+        createAndDispatchCustomEvent( "newsFeedEnd" );
       }
       
-    }, 1000 * j );
+    }, timeout * j );
     })();
     
   }
@@ -112,8 +114,9 @@ function showNews( array ) {
 
 
 function addNews( headerEl, dateEl, wrapperEl, array, j ) {
+  
   function formatDate( date ) {
-    date = new Date( Date.parse( array[j].date ) );
+    
     function getMonthName( monthNumber, enumMonthObj ) {
       for( key in enumMonthObj ) {
         if( key == monthNumber ) {
@@ -121,11 +124,15 @@ function addNews( headerEl, dateEl, wrapperEl, array, j ) {
         }
       }
     }
+    
+    date = new Date( Date.parse( array[j].date ) );
     var properDate = getMonthName( date.getMonth(), month ) + " " +  date.getDate() + ", " + date.getFullYear();
+    
     return properDate; 
   }
+  
   function prepareTemplate( headerContent, dateContent ) {
-    var templateEl = document.querySelector( "template" );
+    var templateEl = document.querySelector( ".template__blog-content" );
     var template = templateEl.content.children[0].cloneNode( true );
     
     var header = template.querySelector( ".blog__news-title" );
@@ -133,19 +140,20 @@ function addNews( headerEl, dateEl, wrapperEl, array, j ) {
     
     header.textContent = headerContent;
     date.textContent = dateContent;
+    
     return template;
   }
   
-  function addElement( templateEl ) {
+  function addTemplateToPage( wrapperEl, templateEl ) {
     wrapperEl.appendChild( templateEl );
-    templateEl.previousElementSibling.classList.add( "top" );
+    templateEl.previousElementSibling.classList.add( "translate-to-top" );
   
     setTimeout( function() {
       templateEl.classList.add( "blog__content--top" );
     }, 10);
   }
   
-  function removePreviousElement( wrapperEl, templateEl ) {
+  function removePreviousTemplate( wrapperEl, templateEl ) {
     templateEl.previousElementSibling.addEventListener( "transitionend", transitionEndHandler );
     
     function transitionEndHandler( event ) {
@@ -153,12 +161,10 @@ function addNews( headerEl, dateEl, wrapperEl, array, j ) {
       wrapperEl.removeChild( this );
     }
   }
-
   
   var templ = prepareTemplate( array[j].header, formatDate( array[j].date ) );
-  addElement( templ );
-  removePreviousElement( wrapperEl, templ );
-  
+  addTemplateToPage( wrapperEl, templ );
+  removePreviousTemplate( wrapperEl, templ );
 }
 
 
