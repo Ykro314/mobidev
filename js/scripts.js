@@ -16,14 +16,29 @@ var month = {
 var newsArray = data.news;
 var helpArray = [];
 
-//newsArray.sort( function( a, b) {
-//  a = new Date( Date.parse( a.date ) ).getMonth();
-//  b = new Date( Date.parse( b.date ) ).getMonth();
-//  return a - b;
-//});
+
+
+window.addEventListener( "DOMContentLoaded", function( event ) {
+  init( newsArray );
+})
+window.addEventListener( "newsend", function( event ) {
+  init( newsArray );
+})
+
+
+
+function init( array ) {
+  var sortedArray = sortElementsInArray( array );
+  sortedArray = createSecondLevelArrays( sortedArray );
+  sortedArray.forEach( function( el, i, arr) {
+    getRandomRecordFromArray( el );
+  });
+  showNews( helpArray );
+}
+
 
 function sortElementsInArray( array ) {
-  array.sort( function( a, b) {
+  array.sort( function( a, b ) {
     a = new Date( Date.parse( a.date ) ).getMonth();
     b = new Date( Date.parse( b.date ) ).getMonth();
     return a - b;
@@ -31,10 +46,8 @@ function sortElementsInArray( array ) {
   return array;
 }
 
-//var groupedArray = createArrays( newsArray );
 
-
-function createArrays( list ) {
+function createSecondLevelArrays( list ) {
   var array = [];
   var index = null;
   list.forEach( function( el, i, arr ){
@@ -48,33 +61,31 @@ function createArrays( list ) {
   return array;
 }
 
-function randomInteger( min, max ) {
-  var rand = min - 0.5 + Math.random() * ( max - min + 1 )
-  rand = Math.round( rand );
-  return rand;
-}
 
 function getRandomRecordFromArray( array ) {
+  function randomInteger( min, max ) {
+    var rand = min - 0.5 + Math.random() * ( max - min + 1 )
+    rand = Math.round( rand );
+    return rand;
+  }
+  
   if( array.length > 0 ) {
-    var index = randomInteger(0, array.length - 1);
-    console.log( array[index].header, index );
-    helpArray.push( array[ index ] );
+    var index = randomInteger( 0, array.length - 1 );
+    helpArray.push( array[index] );
     array.splice( index, 1 );
     getRandomRecordFromArray( array );
   }
   else {
-    console.warn( "end of array" );
     return;
   }
 }
 
-//groupedArray.forEach( function( el, i, arr) {
-//  getRandomRecordFromArray( el );
-//});
-
-//console.log( helpArray );
 
 function showNews( array ) {
+  function createAndDispatchCustomEvent( eventType ) {
+    var evt = new CustomEvent( eventType );
+    window.dispatchEvent( evt );
+  }
   var header = document.querySelector( ".blog .blog__news-title" );
   var date = document.querySelector( ".blog .blog__news-date" );
   var wrapper = document.querySelector( ".blog__wrapper" );
@@ -84,19 +95,23 @@ function showNews( array ) {
     var j = i;
     setTimeout( function timer() {
       
-      addNews( header, date, array, j );
-//      wrapper.removeChild( wrapper.firstElementChild );
+      addNews( header, date, wrapper, array, j );
       
+      /**
+      * restart algorithm if showed element is the last
+      */
       if( j == array.length - 1 ) {
         createAndDispatchCustomEvent( "newsend" );
       }
-    }, 15000 * j );
+      
+    }, 2000 * j );
     })();
     
   }
 } 
 
-function addAnimatedNews( headerEl, dateEl, array, j ) {
+
+function addNews( headerEl, dateEl, wrapperEl, array, j ) {
   function formatDate( date ) {
     date = new Date( Date.parse( array[j].date ) );
     function getMonthName( monthNumber, enumMonthObj ) {
@@ -107,44 +122,7 @@ function addAnimatedNews( headerEl, dateEl, array, j ) {
       }
     }
     var properDate = getMonthName( date.getMonth(), month ) + " " +  date.getDate() + ", " + date.getFullYear();
-    return properDate;
-  }
-  function formatText( text, maxSymbols ) {
-    if( text.length > maxSymbols ) {
-      var formatedText = text.slice( 0, maxSymbols ) + "...";
-      return formatedText;
-    }
-    else {
-      return text;
-    }
-  }
-
-  headerEl.textContent = formatText( array[j].header, 40 );
-  dateEl.textContent = formatDate( array[j].date );
-}
-
-
-function addNews( headerEl, dateEl, array, j ) {
-  function formatDate( date ) {
-    date = new Date( Date.parse( array[j].date ) );
-    function getMonthName( monthNumber, enumMonthObj ) {
-      for( key in enumMonthObj ) {
-        if( key == monthNumber ) {
-          return enumMonthObj[key];
-        }
-      }
-    }
-    var properDate = getMonthName( date.getMonth(), month ) + " " +  date.getDate() + ", " + date.getFullYear();
-    return properDate;
-  }
-  function formatText( text, maxSymbols ) {
-    if( text.length > maxSymbols ) {
-      var formatedText = text.slice( 0, maxSymbols ) + "...";
-      return formatedText;
-    }
-    else {
-      return text;
-    }
+    return properDate; 
   }
   function prepareTemplate( headerContent, dateContent ) {
     var templateEl = document.querySelector( "template" );
@@ -157,121 +135,34 @@ function addNews( headerEl, dateEl, array, j ) {
     date.textContent = dateContent;
     return template;
   }
-
-  var templ = prepareTemplate( formatText( array[j].header, 45 ), formatDate( array[j].date ) );
-  var blogWrapper = document.querySelector( ".blog__wrapper" );
-  blogWrapper.appendChild( templ );
-//  blogWrapper.firstElementChild.classList.add( "top" );
-  setTimeout( function() {
-    templ.classList.add( "blog__content--top" );
-  }, 10);
-//  blogWrapper.firstElementChild.addEventListener( "transitionend", function( event ) {
-//    console.log( "transition end" ); 
-//    blogWrapper.removeChild( this );
-//  });
-}
-
-function createAndDispatchCustomEvent( eventType ) {
-  var evt = new CustomEvent( eventType );
-  window.dispatchEvent( evt );
-}
-//showNews( helpArray );
-
-function init( array ) {
-  var sortedArray = sortElementsInArray( array );
-  var groupedArray = createArrays( sortedArray );
-  groupedArray.forEach( function( el, i, arr) {
-    getRandomRecordFromArray( el );
-  });
-  showNews( helpArray );
-}
-
-
-
-window.addEventListener( "newsend", function( event ) {
-  init( newsArray );
-})
-
-
-
-init( newsArray );
-
-
-
-
-
-
-
-
-
-
-
-//var testRandomArray = groupedArray[3];
-//newsArray.forEach( function( el, i, arr ) {
-//  var time = Date.parse( el.date );
-//  time = new Date( time );
-//  helpArray[i] = time;
-//})
-
-
-
-
-//console.log( groupedArray );
-/**
-groupedArray.forEach( function( el ) {
-  console.log( "===========new array==============" );
-  el.forEach( function( el ) {
-    console.log( el.header );
-  })
-})
-*/
-
-
-//console.log( testRandomArray );
-
-//testRandomArray.forEach( function( el, i, arr ){
-//  var showedIndex = randomInteger( 0, arr.length-1 )
-//  arr.splice( showedIndex, 1);
-//  console.log( arr[ showedIndex ] );
-//})
-
-//getRandomARecordFromArray( testRandomArray );
-
-//console.log( testRandomArray );
-
-
-
-
-
-
-
-
-function rand( array ) {
-  var showed = [];
-  testRandomArray.forEach( r );
   
-  function r( el, i, arr) {
-    var showedIndex = randomInteger( 0, arr.length-1 );
-    showedIndex = test( showedIndex );
-    showed.push( showedIndex );
-    
-    function test( y ) {
-      console.log( y );
-      for( var i = 0; i < showed.length; i++ ) {
-        if( showed[i] === y ) {
-          console.log( y, showed[i] );
-          console.log( "match" );
-          y = randomInteger( 0, arr.length-1 );
-          break;
-        }
-      }
-      return y;
-    }
-    
+  function addElement( templateEl ) {
+    wrapperEl.appendChild( templateEl );
+    templateEl.previousElementSibling.classList.add( "top" );
+  
+    setTimeout( function() {
+      templateEl.classList.add( "blog__content--top" );
+    }, 20);
   }
   
+  function removePreviousElement( wrapperEl ) {
+    wrapperEl.firstElementChild.addEventListener( "transitionend", transitionEndHandler );
+    function transitionEndHandler( event ) {
+      this.removeEventListener( event.type, transitionEndHandler );
+      wrapperEl.removeChild( this );
+    }
+  }
+
   
-  console.log( showed );
+  var templ = prepareTemplate( array[j].header, formatDate( array[j].date ) );
+  addElement( templ );
+  removePreviousElement( wrapperEl );
+  
 }
 
-//rand( testRandomArray[3] );
+
+
+
+
+
+

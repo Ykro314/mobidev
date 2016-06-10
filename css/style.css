@@ -289,12 +289,16 @@ header .page-title {
   font-weight: 100;
 }
 .menu {
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
 }
 .menu__item {
   position: relative;
+  display: -ms-flexbox;
   display: flex;
   width: 150px;
   height: 150px;
@@ -409,26 +413,34 @@ header .page-title {
   display: none;
 }
 .menu__anchor {
-  align-self: flex-end;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
   font-size: 18px;
   line-height: 26px;
   color: white;
   text-decoration: none;
 }
 .blog {
+  display: -ms-flexbox;
   display: flex;
   line-height: 30px;
   padding: 0;
+  transition: transform 0.4s;
 }
 .blog:hover {
   background-color: #030405;
 }
+.blog:hover .blog__news-title:after {
+  background-image: linear-gradient(to right, rgba(3, 4, 5, 0), #030405 70%);
+}
 .blog__image {
   display: inline-block;
   margin-right: 15px;
-  flex-shrink: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
 }
 .blog__wrapper {
+  width: 100%;
   position: relative;
   overflow: hidden;
 }
@@ -442,17 +454,33 @@ header .page-title {
   color: #cccccc;
 }
 .blog__content--bottom {
-  background: #151a26;
+  background: transparent;
   position: absolute;
   top: 0;
   left: 0;
   transform: translateY(100%);
+  transition-timing-function: ease-in;
 }
 .blog__content--top {
+  transition-timing-function: ease-in;
+  transition-duration: 0.4s;
   transform: translateY(0);
 }
 .blog__news-title {
+  position: relative;
+  height: 60px;
+  overflow: hidden;
   font-size: 22px;
+  line-height: 30px;
+}
+.blog__news-title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 30px;
+  background-image: linear-gradient(to right, rgba(21, 26, 38, 0), #151a26 70%);
 }
 .blog__news-date {
   font-size: 12px;
@@ -513,7 +541,8 @@ header .page-title {
     width: 310px;
   }
   .menu__item--contact {
-    flex-grow: 1;
+    -ms-flex-positive: 1;
+        flex-grow: 1;
     margin-bottom: 30px;
   }
   .blog__image {
@@ -530,7 +559,8 @@ header .page-title {
 }
 @media (max-width: 350px) {
   .menu__item {
-    flex-grow: 1;
+    -ms-flex-positive: 1;
+        flex-grow: 1;
   }
   .menu__item--contact {
     margin-bottom: 25px;
